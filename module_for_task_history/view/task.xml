@@ -1,0 +1,126 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+        <record id="project_task_inherit" model="ir.ui.view">
+            <field name="name">project.task.inherit</field>
+            <field name="model">project.task</field>
+            <field name="inherit_id" ref="project.view_task_form2"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='tag_ids']" position="after">
+                  <field name="day_todo"/>
+                </xpath>
+                <page name="description_page" position="before">
+                    <page name="module_page" string="Module Todo" >
+                        <field name="module_ids" >
+                            <tree editable="bottom" order="id desc" >
+                                <field name="module_id" />
+                                <field name="name" />
+                                <field name="start_todo" />
+                                <field name="date_release" />
+                                <field name="description" />
+                                <button name="open_list_todo" string="Register Todo" type="object" icon="fa-list" />
+                            </tree>
+                        </field>
+                    </page>
+                </page>
+            </field>
+        </record>
+
+        <record id="dila_list_revisi_view" model="ir.ui.view">
+            <field name="name">dila.list_revisi.view</field>
+            <field name="model">dila.module.revisi</field>
+            <field name="arch" type="xml">
+                <form string="Form Module Revisi">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="module_id" readonly="1" />
+                                <field name="name" readonly="1"  />
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="List Todo" >
+                                <field name="desc_ids" >
+                                    <tree editable="bottom" >
+                                        <field name="name" />
+                                        <field name="reason" />
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <footer class="oe_edit_only">
+                        <button name="save" type="object" string="Save" class="oe_highlight"/>
+                        <button string="Discard" special="cancel"/>
+                    </footer>                
+                </form>
+            </field>
+        </record>
+
+
+        <record id="dila_module_tree" model="ir.ui.view">
+            <field name="name">module.tree</field>
+            <field name="model">dila.module</field>
+            <field name="arch" type="xml">
+                <tree string="Modules" >
+                    <field name="name" />
+                    <field name="module_name" />
+                    <field name="last_version" />
+                    <field name="last_desc" />
+                </tree>
+            </field>
+        </record>
+
+        <record id="dila_module_view" model="ir.ui.view">
+            <field name="name">dila.module.view</field>
+            <field name="model">dila.module</field>
+            <field name="arch" type="xml">
+                <form string="Form Module Revisi">
+                    <sheet>
+                        <button name="mengcopy" string="Copy to Clipboard" type="object" />
+                        <!--button name="try_scrap" string="Scrap" type="object" /-->
+                        <group>
+                            <group>
+                                <field name="name" />
+                                <field name="module_name" />
+                                <field name="last_version" />
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="List Version" >
+                                <field name="list_version" >
+                                    <tree editable="top" >
+                                        <field name="name" />
+                                        <field name="start_todo" />
+                                        <field name="date_release" />
+                                        <field name="description" />
+                                        <button name="open_list_todo" string="Register Todo" type="object" icon="fa-list" />
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_dila_module_list" model="ir.actions.act_window">
+            <field name="name">Module of Odoo</field>
+            <field name="res_model">dila.module</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Click to register a History Module
+                </p>
+            </field>
+        </record>
+
+        <menuitem id="dila_menu_module"
+             name="History Module Revisi"
+             sequence="20"
+             action="action_dila_module_list"
+             parent="project.menu_project_management"/>
+
+    </data>
+</openerp>
