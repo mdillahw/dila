@@ -13,11 +13,6 @@
     "data": [ 
         "view/task.xml"
     ],
-    "qweb": [
-    ],
-    'price': '50',
-    'currency': "USD",
-
     "license": 'LGPL-3',
     'installable': True
 }
