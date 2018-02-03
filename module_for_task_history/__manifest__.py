@@ -15,7 +15,7 @@
     ],
     "license": 'LGPL-3',
     "external_dependencies": {
-        'python': ['pandas'],
+        'python': ['pyperclip'],
     },
     'installable': True
 }
