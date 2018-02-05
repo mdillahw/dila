@@ -48,10 +48,10 @@ class ModuleName(models.Model):
             strdata +='Date Release : ' + str(date_release) + '\n'
             strdata +='Description : ' + last.description + '\n'
         strdata += "===============================================================================\n"
-        #import pyperclip
-        #pyperclip.copy(strdata)
-        #import os 
-        #os.system("echo '%s' | clipboard" % strdata)
+        import pyperclip
+        pyperclip.copy(strdata)
+        import os 
+        os.system("echo '%s' | clipboard" % strdata)
     
 
 

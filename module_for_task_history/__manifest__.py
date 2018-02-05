@@ -14,5 +14,8 @@
         "view/task.xml"
     ],
     "license": 'LGPL-3',
+    "external_dependencies": {
+        'python': ['pyperclip'],
+    },
     'installable': True
 }
