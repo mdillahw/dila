@@ -40,9 +40,9 @@ class ModuleName(models.Model):
             tz = pytz.timezone(self.env.user.tz)
 
         strdata = "===============================================================================\n"
-        strdata +='Module Name (folder) : ' + self.name + '\n'
-        strdata +='Module Name (at Odoo) : ' + self.module_name + '\n'
-        strdata +='Version : ' + self.last_version + '\n'
+        strdata +='Module Name (folder) : ' + (self.name or '') + '\n'
+        strdata +='Module Name (at Odoo) : ' + (self.module_name or '') + '\n'
+        strdata +='Version : ' + (self.last_version or '') + '\n'
         last = self.env['dila.module.revisi'].search([('module_id','=',self.id)],limit=1, order='id desc')
         if last:
             if last.start_todo:
