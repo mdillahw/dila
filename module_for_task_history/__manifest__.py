@@ -4,7 +4,7 @@
     "name": "Task History of Version",
     "author": "abdillahwahab",
     "website": "www.abdillahwahab.com",
-    "version": "1.0.0",
+    "version": "1.2",
     "category": "project",
     "depends": [
         "base",

@@ -17,8 +17,10 @@ class ModuleName(models.Model):
     name = fields.Char(string="Module Name (folder)")
     module_name = fields.Char(string="Module Name (at Odoo)")
     list_version = fields.One2many('dila.module.revisi','module_id', 'List Version', order="id desc")
+    client = fields.Many2one('res.partner',' Client')
     last_version = fields.Char(string="Last Version", compute="last_v")
     last_desc = fields.Char(string="Last Change", compute="last_v")
+    description = fields.Text(string="Newest Description", compute="mengcopy")
 
     @api.multi
     def last_v(self):
@@ -28,9 +30,10 @@ class ModuleName(models.Model):
                 rec.last_version = last.name
                 rec.last_desc = last.description
             else:
-                rec.last_version = "1.0.0"
+                rec.last_version = "1.0"
                 rec.last_desc = ''
 
+    @api.onchange('list_version')
     def mengcopy(self):
         tz = pytz.utc
         if self.env.user.tz:
@@ -42,16 +45,19 @@ class ModuleName(models.Model):
         strdata +='Version : ' + self.last_version + '\n'
         last = self.env['dila.module.revisi'].search([('module_id','=',self.id)],limit=1, order='id desc')
         if last:
-            start_todo = pytz.utc.localize(datetime.strptime(last.start_todo, "%Y-%m-%d %H:%M:%S")).astimezone(tz)
-            strdata +='Start Todo : ' + str(start_todo) + '\n'
-            date_release = pytz.utc.localize(datetime.strptime(last.date_release, "%Y-%m-%d %H:%M:%S")).astimezone(tz)
-            strdata +='Date Release : ' + str(date_release) + '\n'
+            if last.start_todo:
+                start_todo = pytz.utc.localize(datetime.strptime(last.start_todo, "%Y-%m-%d %H:%M:%S")).astimezone(tz)
+                strdata +='Start Todo : ' + str(start_todo) + '\n'
+            if last.date_release:
+                date_release = pytz.utc.localize(datetime.strptime(last.date_release, "%Y-%m-%d %H:%M:%S")).astimezone(tz)
+                strdata +='Date Release : ' + str(date_release) + '\n'
             strdata +='Description : ' + last.description + '\n'
         strdata += "===============================================================================\n"
-        import pyperclip
-        pyperclip.copy(strdata)
-        import os 
-        os.system("echo '%s' | clipboard" % strdata)
+        self.description = strdata
+        #import pyperclip
+        #pyperclip.copy(strdata)
+        #import os 
+        #os.system("echo '%s' | clipboard" % strdata)
     
 
 
@@ -67,6 +73,10 @@ class Revisi(models.Model):
     task_id = fields.Many2one('project.task','Task ID')
     desc_ids = fields.One2many('dila.module.revisi.list','revisi_id','Desc Todo')
 
+
+    @api.onchange('desc_ids')
+    def get_desc(self):
+        self.module_id.mengcopy()
 
     @api.multi
     def get_desc(self):
