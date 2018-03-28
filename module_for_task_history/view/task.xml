@@ -69,7 +69,7 @@
                     <field name="client" />
                     <field name="last_version" />
                     <field name="commit_git" />
-                    <field name="last_desc" />
+                    <!--field name="last_desc" /-->
                 </tree>
             </field>
         </record>
