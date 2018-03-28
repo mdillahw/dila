@@ -21,6 +21,7 @@ class ModuleName(models.Model):
     last_version = fields.Char(string="Last Version", compute="last_v")
     last_desc = fields.Char(string="Last Change", compute="last_v")
     description = fields.Text(string="Newest Description", compute="mengcopy")
+    commit_git = fields.Char(string="Commit GIT", compute="last_v")
 
     @api.multi
     def last_v(self):
@@ -29,9 +30,11 @@ class ModuleName(models.Model):
             if last:
                 rec.last_version = last.name
                 rec.last_desc = last.description
+                rec.commit_git = last.commit_git
             else:
                 rec.last_version = "1.0"
                 rec.last_desc = ''
+                #rec.commit_git = False
 
     @api.onchange('list_version')
     def mengcopy(self):
@@ -72,6 +75,7 @@ class Revisi(models.Model):
     module_id = fields.Many2one('dila.module','Module Name', required=True)
     task_id = fields.Many2one('project.task','Task ID')
     desc_ids = fields.One2many('dila.module.revisi.list','revisi_id','Desc Todo')
+    commit_git = fields.Char(string="Commit GIT")
 
 
     @api.onchange('desc_ids')

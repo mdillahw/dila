@@ -63,11 +63,12 @@
             <field name="name">module.tree</field>
             <field name="model">dila.module</field>
             <field name="arch" type="xml">
-                <tree string="Modules" >
+                <tree string="Modules" default_order="write_date desc" colors="red:commit_git == False" >
                     <field name="name" />
                     <field name="module_name" />
                     <field name="client" />
                     <field name="last_version" />
+                    <field name="commit_git" />
                     <field name="last_desc" />
                 </tree>
             </field>
@@ -97,12 +98,13 @@
                         <notebook>
                             <page string="List Version" >
                                 <field name="list_version" >
-                                    <tree editable="buttom" default_order="write_date desc" >
+                                    <tree editable="buttom" default_order="create_date desc" colors="red:commit_git == False" >
                                         <field name="name" />
                                         <field name="start_todo" />
                                         <field name="date_release" />
                                         <field name="description" />
                                         <field name="create_uid" readonly='1' string="Created By" />
+                                        <field name="commit_git" />
                                         <button name="open_list_todo" string="Register Todo" type="object" icon="fa-list" />
                                     </tree>
                                 </field>
