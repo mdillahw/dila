@@ -20,6 +20,7 @@ class ModuleName(models.Model):
     client = fields.Many2one('res.partner',' Client')
     last_version = fields.Char(string="Last Version", compute="last_v")
     last_desc = fields.Char(string="Last Change", compute="last_v")
+    last_change = fields.Many2one('res.users',string="Last Change", compute="last_v")
     description = fields.Text(string="Newest Description", compute="mengcopy")
     commit_git = fields.Char(string="Commit GIT", compute="last_v")
 
@@ -31,6 +32,7 @@ class ModuleName(models.Model):
                 rec.last_version = last.name
                 rec.last_desc = last.description
                 rec.commit_git = last.commit_git
+                rec.last_change = last.create_uid.id
             else:
                 rec.last_version = "1.0"
                 rec.last_desc = ''
@@ -76,6 +78,7 @@ class Revisi(models.Model):
     task_id = fields.Many2one('project.task','Task ID')
     desc_ids = fields.One2many('dila.module.revisi.list','revisi_id','Desc Todo')
     commit_git = fields.Char(string="Commit GIT")
+    long_t = fields.Float(string="Durasi", compute="get_desc")
 
 
     @api.onchange('desc_ids')
@@ -85,6 +88,7 @@ class Revisi(models.Model):
     @api.multi
     def get_desc(self):
         for rec in self:
+            rec.long_t = (datetime.strptime(rec.date_release, "%Y-%m-%d %H:%M:%S") - datetime.strptime(rec.start_todo, "%Y-%m-%d %H:%M:%S")).total_seconds()
             str_desc = ''
             i = 0
             for ln in rec.desc_ids:

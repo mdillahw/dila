@@ -68,6 +68,7 @@
                     <field name="module_name" />
                     <field name="client" />
                     <field name="last_version" />
+                    <field name="last_change" />
                     <field name="commit_git" />
                     <!--field name="last_desc" /-->
                 </tree>
@@ -89,7 +90,7 @@
                                 <field name="client" />
                                 <field name="last_version" />
                                 <field name="create_uid" readonly='1' string="Created By" />
-                            </group>
+                            </group> 
                                 <button name="mengcopy" string="Show to copy" type="object" />
                             <group>
                                 <field name="description" string="Copy Me!" />
@@ -115,6 +116,25 @@
             </field>
         </record>
 
+        <record id="view_moduledila__search" model="ir.ui.view">
+            <field name="name">dila.module.search</field>
+            <field name="model">dila.module</field>
+            <field name="arch" type="xml">
+                <search string="Modules">
+                    <field name="name" />
+                    <field name="module_name" />
+                    <field name="client" />
+                    <field name="last_version" />
+                    <field name="last_change" />
+                    <field name="commit_git" />
+                    <group expand="0" string="Group By...">
+                        <filter name="group_by_client" string="Client"
+                            domain="[]" context="{'group_by':'client'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
         <record id="action_dila_module_list" model="ir.actions.act_window">
             <field name="name">Module of Odoo</field>
             <field name="res_model">dila.module</field>
@@ -125,6 +145,8 @@
                     Click to register a History Module
                 </p>
             </field>
+            <field name="search_view_id" ref="view_moduledila__search"/>
+            <field name="context">{'search_default_group_by_client': 1,}</field>
         </record>
 
         <menuitem id="dila_menu_module"
