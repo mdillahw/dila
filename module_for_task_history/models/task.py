@@ -88,7 +88,9 @@ class Revisi(models.Model):
     @api.multi
     def get_desc(self):
         for rec in self:
-            rec.long_t = (datetime.strptime(rec.date_release, "%Y-%m-%d %H:%M:%S") - datetime.strptime(rec.start_todo, "%Y-%m-%d %H:%M:%S")).total_seconds()
+            rec.long_t = 0
+            if rec.date_release and rec.start_todo:
+                rec.long_t = (datetime.strptime(rec.date_release, "%Y-%m-%d %H:%M:%S") - datetime.strptime(rec.start_todo, "%Y-%m-%d %H:%M:%S")).total_seconds()
             str_desc = ''
             i = 0
             for ln in rec.desc_ids:
