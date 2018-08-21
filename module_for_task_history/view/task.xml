@@ -100,6 +100,7 @@
                             <page string="List Version" >
                                 <field name="list_version" >
                                     <tree editable="buttom" default_order="create_date desc" colors="red:commit_git == False" >
+                                        <field name="create_date" invisible="1" />
                                         <field name="name" />
                                         <field name="start_todo" />
                                         <field name="date_release" />
