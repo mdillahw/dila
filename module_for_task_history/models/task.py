@@ -64,6 +64,10 @@ class ModuleName(models.Model):
         #import os 
         #os.system("echo '%s' | clipboard" % strdata)
     
+    @api.model
+    def read_group(self, domain, fields, groupby, offset=0, limit=None, orderby=False, lazy=True):
+        orderby = 'write_date desc'
+        return super(ModuleName, self).read_group(domain, fields, groupby, offset, limit, orderby, lazy)
 
 
 
