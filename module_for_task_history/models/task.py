@@ -66,7 +66,10 @@ class ModuleName(models.Model):
     
     @api.model
     def read_group(self, domain, fields, groupby, offset=0, limit=None, orderby=False, lazy=True):
-        orderby = 'write_date desc'
+        if 'write_date' in groupby:
+            orderby = 'write_date desc'
+        if not groupby:
+            orderby = 'write_date desc'
         return super(ModuleName, self).read_group(domain, fields, groupby, offset, limit, orderby, lazy)
 
 
