@@ -70,7 +70,7 @@
                     <field name="last_version" />
                     <field name="last_change" />
                     <field name="commit_git" />
-                    <!--field name="last_desc" /-->
+                    <field name="write_date" invisible="1"/>
                 </tree>
             </field>
         </record>
