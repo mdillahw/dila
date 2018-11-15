@@ -10,10 +10,11 @@
         "base",
         "project",
     ],
-    "data": [ 
-        "view/task.xml"
+    "data": [
+        "view/task.xml",
+        "reports/history.xml",
     ],
     "license": 'LGPL-3',
-    
+
     'installable': True
 }

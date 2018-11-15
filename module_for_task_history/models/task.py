@@ -61,9 +61,9 @@ class ModuleName(models.Model):
         self.description = strdata
         #import pyperclip
         #pyperclip.copy(strdata)
-        #import os 
+        #import os
         #os.system("echo '%s' | clipboard" % strdata)
-    
+
     @api.model
     def read_group(self, domain, fields, groupby, offset=0, limit=None, orderby=False, lazy=True):
         if not groupby:
@@ -74,6 +74,7 @@ class ModuleName(models.Model):
 
 class Revisi(models.Model):
     _name = 'dila.module.revisi'
+    _order = 'id desc'
 
     name = fields.Char(string="Version", required=True)
     start_todo = fields.Datetime('Start Todo')
@@ -124,7 +125,7 @@ class Revisi(models.Model):
     def save(self):
         return True
 
-    _sql_constraints = [('name_uniq', 'unique(name, module_id)', _('Versi ini sudah pernah digunakan'))]    
+    _sql_constraints = [('name_uniq', 'unique(name, module_id)', _('Versi ini sudah pernah digunakan'))]
 
 class Revisi_list(models.Model):
     _name = 'dila.module.revisi.list'
@@ -132,4 +133,3 @@ class Revisi_list(models.Model):
     revisi_id = fields.Many2one('dila.module.revisi')
     name = fields.Char(string="Description", required=True)
     reason = fields.Char(string="Reason")
-
