@@ -19,6 +19,8 @@
                                 <field name="date_release" />
                                 <field name="description" />
                                 <field name="create_uid" readonly='1' string="Created By" />
+                                <field name="depployed_date"/>
+                                <field name="depployed_by"/>
                                 <button name="open_list_todo" string="Register Todo" type="object" icon="fa-list" />
                             </tree>
                         </field>
@@ -53,7 +55,7 @@
                     <footer class="oe_edit_only">
                         <button name="save" type="object" string="Save" class="oe_highlight"/>
                         <button string="Discard" special="cancel"/>
-                    </footer>                
+                    </footer>
                 </form>
             </field>
         </record>
@@ -90,7 +92,7 @@
                                 <field name="client" />
                                 <field name="last_version" />
                                 <field name="create_uid" readonly='1' string="Created By" />
-                            </group> 
+                            </group>
                                 <button name="mengcopy" string="Show to copy" type="object" />
                             <group>
                                 <field name="description" string="Copy Me!" />
@@ -107,6 +109,8 @@
                                         <field name="description" />
                                         <field name="create_uid" readonly='1' string="Created By" />
                                         <field name="commit_git" />
+                                        <field name="depployed_date" />
+                                        <field name="depployed_by"  options="{'no_create': True, 'no_create_edit':True}" domain="[('id', '=', uid)]" attrs="{'required':[('depployed_date', '!=', False)]}"/>
                                         <button name="open_list_todo" string="Register Todo" type="object" icon="fa-list" />
                                     </tree>
                                 </field>
@@ -155,6 +159,65 @@
              sequence="20"
              action="action_dila_module_list"
              parent="project.menu_project_management"/>
+
+
+         <record id="dila_knowledge_tree" model="ir.ui.view">
+             <field name="name">knowledge.tree</field>
+             <field name="model">dila.knowledge</field>
+             <field name="arch" type="xml">
+                 <tree string="Kenowledge" default_order="write_date desc" >
+                     <field name="name" />
+                     <field name="narration" />
+                 </tree>
+             </field>
+         </record>
+
+         <record id="dila_knowledge_view" model="ir.ui.view">
+             <field name="name">dila.knowledge.view</field>
+             <field name="model">dila.knowledge</field>
+             <field name="arch" type="xml">
+                 <form string="Knowledge">
+                     <sheet>
+                         <group>
+                           <field name="name" />
+                         </group>
+                         <group>
+                            <field name="narration" widget="html" nolabel="1" placeholder="Write your narration here!"/>
+                         </group>
+                       </sheet>
+                   </form>
+             </field>
+         </record>
+
+         <record id="view_knowledge_search" model="ir.ui.view">
+             <field name="name">dila.knowledge.search</field>
+             <field name="model">dila.knowledge</field>
+             <field name="arch" type="xml">
+                 <search string="Knowledge">
+                     <field name="name" />
+                     <field name="narration" />
+                 </search>
+             </field>
+         </record>
+
+         <record id="action_dila_knowledge_list" model="ir.actions.act_window">
+             <field name="name">Knowledge</field>
+             <field name="res_model">dila.knowledge</field>
+             <field name="view_type">form</field>
+             <field name="view_mode">tree,form</field>
+             <field name="help" type="html">
+                 <p class="oe_view_nocontent_create">
+                     Click to show your experience
+                 </p>
+             </field>
+             <field name="search_view_id" ref="view_knowledge_search"/>
+         </record>
+
+         <menuitem id="dila_menu_knowledge"
+              name="Knowledge"
+              sequence="21"
+              action="action_dila_knowledge_list"
+              parent="project.menu_project_management"/>
 
     </data>
 </openerp>

@@ -23,6 +23,8 @@ class ModuleName(models.Model):
     last_change = fields.Many2one('res.users',string="Last Change", compute="last_v")
     description = fields.Text(string="Newest Description", compute="mengcopy")
     commit_git = fields.Char(string="Commit GIT", compute="last_v")
+    depployed_date = fields.Datetime(string="Depploy Date", compute="last_v")
+    depployed_by = fields.Many2one('res.users', string="Depploy By", compute="last_v")
 
     @api.multi
     def last_v(self):
@@ -33,6 +35,8 @@ class ModuleName(models.Model):
                 rec.last_desc = last.description
                 rec.commit_git = last.commit_git
                 rec.last_change = last.create_uid.id
+                rec.depployed_date = last.depployed_date
+                rec.depployed_by = last.depployed_by.id
             else:
                 rec.last_version = "1.0"
                 rec.last_desc = ''
@@ -85,11 +89,13 @@ class Revisi(models.Model):
     desc_ids = fields.One2many('dila.module.revisi.list','revisi_id','Desc Todo')
     commit_git = fields.Char(string="Commit GIT")
     long_t = fields.Float(string="Durasi", compute="get_desc")
-
+    depployed_date = fields.Datetime(string="Depploy Date")
+    depployed_by = fields.Many2one('res.users' ,string="Depploy By")
 
     @api.onchange('desc_ids')
     def get_desc(self):
         self.module_id.mengcopy()
+
 
     @api.multi
     def get_desc(self):
